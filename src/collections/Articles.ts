@@ -74,6 +74,34 @@ export const Articles: CollectionConfig = {
       },
     },
     {
+      name: 'workflowStatus',
+      label: 'Рабочий статус',
+      type: 'select',
+      admin: {
+        description:
+          'Внутренний статус для автора. Он помогает вести работу над текстом и не влияет на публикацию напрямую.',
+      },
+      defaultValue: 'draft',
+      options: [
+        {
+          label: 'Идея',
+          value: 'idea',
+        },
+        {
+          label: 'Черновик',
+          value: 'draft',
+        },
+        {
+          label: 'На вычитке',
+          value: 'review',
+        },
+        {
+          label: 'Готово к публикации',
+          value: 'ready',
+        },
+      ],
+    },
+    {
       name: 'featured',
       label: 'Избранная статья',
       type: 'checkbox',
@@ -132,6 +160,42 @@ export const Articles: CollectionConfig = {
           pickerAppearance: 'dayAndTime',
         },
       },
+    },
+    {
+      type: 'group',
+      name: 'publishChecklist',
+      label: 'Чеклист перед публикацией',
+      admin: {
+        description:
+          'Неблокирующая проверка для автора. Отметьте пункты, когда статья готова к публикации.',
+      },
+      fields: [
+        {
+          name: 'checkedExcerpt',
+          label: 'Краткое описание проверено',
+          type: 'checkbox',
+        },
+        {
+          name: 'checkedCover',
+          label: 'Обложка выбрана и подходит по смыслу',
+          type: 'checkbox',
+        },
+        {
+          name: 'checkedCategory',
+          label: 'Категория и теги проверены',
+          type: 'checkbox',
+        },
+        {
+          name: 'checkedSlug',
+          label: 'Адрес страницы проверен',
+          type: 'checkbox',
+        },
+        {
+          name: 'checkedPreview',
+          label: 'Предпросмотр открыт и текст выглядит правильно',
+          type: 'checkbox',
+        },
+      ],
     },
     {
       type: 'group',

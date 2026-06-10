@@ -114,3 +114,78 @@
   font-size: 24px;
   line-height: 1.15;
 }
+
+.afterword {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 28px;
+  margin-top: 52px;
+  padding-top: 28px;
+}
+
+.authorBox {
+  gap: 18px;
+}
+
+.authorBoxWithPhoto {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+}
+
+.authorPhoto {
+  aspect-ratio: 1;
+  background: #e8e1d5;
+  object-fit: cover;
+  width: 72px;
+}
+
+.authorBox h2,
+.shareBox h2 {
+  font-size: 26px;
+  margin: 0 0 8px;
+}
+
+.authorBox p,
+.shareBox p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.authorLink {
+  color: var(--accent-strong);
+  display: inline-flex;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 12px;
+  text-decoration: none;
+}
+
+.shareBox {
+  background: #f3eee5;
+  padding: 18px;
+}
+
+.shareLink {
+  color: var(--accent-strong);
+  display: inline-block;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+  .authorBox {
+    grid-template-columns: 1fr;
+  }
+}

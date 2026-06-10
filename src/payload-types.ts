@@ -203,6 +203,10 @@ export interface Article {
    */
   readingTime?: number | null;
   /**
+   * Внутренний статус для автора. Он помогает вести работу над текстом и не влияет на публикацию напрямую.
+   */
+  workflowStatus?: ('idea' | 'draft' | 'review' | 'ready') | null;
+  /**
    * Если включено, статья может показываться крупнее на главной странице.
    */
   featured?: boolean | null;
@@ -240,6 +244,16 @@ export interface Article {
    * Если оставить пустой при публикации, дата заполнится автоматически текущим временем.
    */
   publishedAt?: string | null;
+  /**
+   * Неблокирующая проверка для автора. Отметьте пункты, когда статья готова к публикации.
+   */
+  publishChecklist?: {
+    checkedExcerpt?: boolean | null;
+    checkedCover?: boolean | null;
+    checkedCategory?: boolean | null;
+    checkedSlug?: boolean | null;
+    checkedPreview?: boolean | null;
+  };
   seo?: {
     /**
      * Можно оставить пустым: тогда будет использован обычный заголовок статьи.
@@ -423,12 +437,22 @@ export interface ArticlesSelect<T extends boolean = true> {
   excerpt?: T;
   subtitle?: T;
   readingTime?: T;
+  workflowStatus?: T;
   featured?: T;
   coverImage?: T;
   content?: T;
   category?: T;
   tags?: T;
   publishedAt?: T;
+  publishChecklist?:
+    | T
+    | {
+        checkedExcerpt?: T;
+        checkedCover?: T;
+        checkedCategory?: T;
+        checkedSlug?: T;
+        checkedPreview?: T;
+      };
   seo?:
     | T
     | {

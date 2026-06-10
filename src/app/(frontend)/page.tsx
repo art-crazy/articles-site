@@ -7,6 +7,8 @@ import { getPayloadClient } from '@/shared/api/payload'
 import { getSiteSettings } from '@/shared/api/siteSettings'
 import { getMediaAlt, getMediaUrl } from '@/shared/lib/format'
 
+import styles from './HomePage.module.css'
+
 export const revalidate = 60
 export const dynamic = 'force-dynamic'
 
@@ -58,22 +60,22 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="hero">
+      <section className={styles.hero}>
         <div>
           <p className="eyebrow">{settings.siteTitle}</p>
           <h1>{settings.siteDescription}</h1>
           {settings.authorBio && <p className="lead">{settings.authorBio}</p>}
-          <div className="hero-actions">
-            <Link className="button-link" href="/articles">
+          <div className={styles.heroActions}>
+            <Link className={styles.buttonLink} href="/articles">
               Все статьи
             </Link>
-            <Link className="secondary-link" href="/about">
+            <Link className={styles.secondaryLink} href="/about">
               Об авторе
             </Link>
           </div>
           <SearchForm />
         </div>
-        <div className="hero-panel">
+        <div className={styles.heroPanel}>
           {featured ? (
             <ArticleCard article={featured} />
           ) : (
@@ -86,9 +88,12 @@ export default async function HomePage() {
       </section>
 
       {rest.length > 0 && (
-        <section className="section">
-          <h2>Последние публикации</h2>
-          <div className="article-grid">
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2>Последние публикации</h2>
+            <p>Новые тексты, заметки и материалы, которые можно прочитать с главной страницы.</p>
+          </div>
+          <div className={styles.articleGrid}>
             {rest.map((article) => (
               <ArticleCard article={article} key={article.id} />
             ))}
@@ -96,11 +101,14 @@ export default async function HomePage() {
         </section>
       )}
 
-      <section className="section home-split">
+      <section className={`${styles.section} ${styles.split}`}>
         <div>
-          <h2>Категории</h2>
+          <div className={styles.sectionHeader}>
+            <h2>Темы журнала</h2>
+            <p>Разделы помогают быстро найти статьи по близкой теме.</p>
+          </div>
           {categories.docs.length > 0 ? (
-            <div className="category-list">
+            <div className={styles.categoryList}>
               {categories.docs.map((category) => (
                 <Link href={`/categories/${category.slug}`} key={category.id}>
                   <span>{category.title}</span>
@@ -112,11 +120,11 @@ export default async function HomePage() {
             <div className="empty-state">Категории пока не добавлены.</div>
           )}
         </div>
-        <aside className="author-summary">
+        <aside className={styles.authorSummary}>
           {authorPhotoUrl && (
             <Image
               alt={getMediaAlt(settings.authorPhoto) || settings.authorName}
-              className="author-summary__photo"
+              className={styles.authorPhoto}
               height={160}
               src={authorPhotoUrl}
               width={160}
@@ -125,7 +133,7 @@ export default async function HomePage() {
           <p className="eyebrow">Автор</p>
           <h3>{settings.authorName}</h3>
           {settings.authorBio && <p>{settings.authorBio}</p>}
-          <Link className="secondary-link" href="/about">
+          <Link className={styles.secondaryLink} href="/about">
             Подробнее
           </Link>
         </aside>

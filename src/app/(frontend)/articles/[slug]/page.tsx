@@ -138,6 +138,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const tags = Array.isArray(article.tags) ? article.tags : []
   const settings = await getSiteSettings()
   const relatedArticles = await getRelatedArticles(article)
+  const authorPhotoUrl = getMediaUrl(settings.authorPhoto)
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '')
+  const articleUrl = `${siteUrl}/articles/${article.slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -201,6 +204,34 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         />
       )}
       <RichText data={article.content} />
+      <section className={styles.afterword}>
+        <div className={`${styles.authorBox} ${authorPhotoUrl ? styles.authorBoxWithPhoto : ''}`}>
+          {authorPhotoUrl && (
+            <Image
+              alt={getMediaAlt(settings.authorPhoto) || settings.authorName}
+              className={styles.authorPhoto}
+              height={144}
+              src={authorPhotoUrl}
+              width={144}
+            />
+          )}
+          <div>
+            <p className="eyebrow">Автор</p>
+            <h2>{settings.authorName}</h2>
+            {settings.authorBio && <p>{settings.authorBio}</p>}
+            <Link className={styles.authorLink} href="/about">
+              Подробнее об авторе
+            </Link>
+          </div>
+        </div>
+        <div className={styles.shareBox}>
+          <h2>Поделиться статьей</h2>
+          <p>Скопируйте ссылку и отправьте ее в сообщении или соцсетях.</p>
+          <a className={styles.shareLink} href={articleUrl}>
+            {articleUrl}
+          </a>
+        </div>
+      </section>
       {relatedArticles.length > 0 && (
         <section className={styles.related}>
           <p className="eyebrow">Еще по этой теме</p>
