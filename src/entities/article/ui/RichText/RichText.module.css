@@ -1,0 +1,113 @@
+.body {
+  font-size: 21px;
+  line-height: 1.72;
+}
+
+.body p,
+.body ul,
+.body ol,
+.body blockquote {
+  margin: 0 0 1.3em;
+}
+
+.body h2 {
+  font-size: 34px;
+  margin: 1.7em 0 0.6em;
+}
+
+.body h3 {
+  font-size: 27px;
+  margin: 1.5em 0 0.5em;
+}
+
+.body blockquote {
+  border-left: 3px solid var(--accent);
+  color: var(--accent-strong);
+  font-size: 24px;
+  font-style: italic;
+  padding-left: 22px;
+}
+
+.image {
+  margin: 2rem 0;
+}
+
+.image img {
+  background: #e8e1d5;
+  width: 100%;
+}
+
+.image figcaption {
+  color: var(--muted);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+.callout {
+  border-left: 4px solid var(--accent);
+  font-size: 20px;
+  line-height: 1.55;
+  margin: 2rem 0;
+  padding: 14px 18px;
+}
+
+.note {
+  background: #f3eee5;
+}
+
+.important {
+  background: #fff4c2;
+  border-left-color: #9c7415;
+}
+
+.quote {
+  background: transparent;
+  color: var(--accent-strong);
+  font-style: italic;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.4rem 0;
+}
+
+.related {
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 6px;
+  margin: 2rem 0;
+  padding: 16px;
+}
+
+.related span {
+  color: var(--muted);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.related a {
+  color: var(--accent-strong);
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 560px) {
+  .body {
+    font-size: 18px;
+  }
+}

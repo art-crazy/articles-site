@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "Recommended file length check..."
+pnpm run lint:file-lengths || true
+
+exit 0
