@@ -1,0 +1,74 @@
+.filters {
+  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 18px;
+  margin: 34px 0 10px;
+  padding: 22px 0;
+}
+
+.filterGroup {
+  display: grid;
+  gap: 10px;
+}
+
+.filterGroup > span {
+  color: var(--muted);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filterLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filterLinks a {
+  border: 1px solid var(--line);
+  color: var(--accent-strong);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  padding: 9px 12px;
+  text-decoration: none;
+}
+
+.filterLinks a:hover,
+.filterLinks a[aria-current='true'] {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: var(--surface);
+}
+
+.activeFilter {
+  color: var(--muted);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  margin: 16px 0 0;
+}
+
+@media (max-width: 560px) {
+  .filters {
+    margin-top: 26px;
+  }
+
+  .filterLinks a {
+    max-width: 100%;
+  }
+}

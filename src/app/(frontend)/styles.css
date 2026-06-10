@@ -17,6 +17,7 @@ html {
   color: var(--foreground);
   font-size: 18px;
   line-height: 1.6;
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
 }
 

@@ -1,6 +1,7 @@
 .body {
   font-size: 21px;
   line-height: 1.72;
+  overflow-wrap: break-word;
 }
 
 .body p,
@@ -13,11 +14,28 @@
 .body h2 {
   font-size: 34px;
   margin: 1.7em 0 0.6em;
+  scroll-margin-top: 24px;
 }
 
 .body h3 {
   font-size: 27px;
   margin: 1.5em 0 0.5em;
+  scroll-margin-top: 24px;
+}
+
+.body ul,
+.body ol {
+  padding-left: 1.35em;
+}
+
+.body li {
+  margin: 0 0 0.45em;
+  padding-left: 0.15em;
+}
+
+.body a {
+  color: var(--accent-strong);
+  font-weight: 700;
 }
 
 .body blockquote {
@@ -109,5 +127,13 @@
 @media (max-width: 560px) {
   .body {
     font-size: 18px;
+  }
+
+  .body h2 {
+    font-size: 28px;
+  }
+
+  .body h3 {
+    font-size: 23px;
   }
 }
