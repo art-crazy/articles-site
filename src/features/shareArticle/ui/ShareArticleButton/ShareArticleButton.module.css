@@ -1,0 +1,21 @@
+.button {
+  background: var(--foreground);
+  border: 0;
+  color: var(--background);
+  cursor: pointer;
+  display: inline-flex;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 14px;
+  padding: 10px 14px;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

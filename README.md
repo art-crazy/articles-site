@@ -45,6 +45,16 @@ Payload will ask you to create the first admin user on first visit.
 - `Tags`
 - `Users`: admin users
 
+## Backups
+
+Create a local backup:
+
+```bash
+pnpm backup
+```
+
+The archive is saved to `backups/`. Restore notes are in `docs/backup-restore.md`.
+
 ## Production Notes
 
 For production, use managed PostgreSQL or a backed-up Postgres instance. Move uploads to S3-compatible storage such as Cloudflare R2 before real publishing if the app is deployed to ephemeral infrastructure.

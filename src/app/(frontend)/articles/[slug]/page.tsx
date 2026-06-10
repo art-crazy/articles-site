@@ -1,20 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import { RichText } from '@/entities/article/ui/RichText/RichText'
-import { getPayloadClient } from '@/shared/api/payload'
+import { ShareArticleButton } from '@/features/shareArticle/ui/ShareArticleButton/ShareArticleButton'
 import { getSiteSettings } from '@/shared/api/siteSettings'
 import {
   formatDate,
   getMediaAlt,
   getMediaUrl,
-  getRelationId,
   getRelationSlug,
   getRelationTitle,
 } from '@/shared/lib/format'
 
+import { getAdjacentArticles, getArticle, getRelatedArticles } from './articleQueries'
 import styles from './ArticlePage.module.css'
 
 export const revalidate = 60
@@ -24,78 +23,6 @@ type ArticlePageProps = {
   params: Promise<{
     slug: string
   }>
-}
-
-async function getArticle(slug: string) {
-  const { isEnabled } = await draftMode()
-  const payload = await getPayloadClient()
-  const result = await payload.find({
-    collection: 'articles',
-    depth: 2,
-    draft: isEnabled,
-    limit: 1,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  const article = result.docs[0] || null
-
-  if (!article || (!isEnabled && article._status !== 'published')) {
-    return null
-  }
-
-  return article
-}
-
-async function getRelatedArticles(article: NonNullable<Awaited<ReturnType<typeof getArticle>>>) {
-  const payload = await getPayloadClient()
-  const categoryId = getRelationId(article.category)
-  const tagIds = Array.isArray(article.tags)
-    ? article.tags.map(getRelationId).filter((id): id is string | number => id !== null)
-    : []
-
-  if (!categoryId && tagIds.length === 0) {
-    return []
-  }
-
-  const result = await payload.find({
-    collection: 'articles',
-    depth: 1,
-    limit: 8,
-    sort: '-publishedAt',
-    where: {
-      and: [
-        {
-          _status: {
-            equals: 'published',
-          },
-        },
-        {
-          or: [
-            ...(categoryId
-              ? [
-                  {
-                    category: {
-                      equals: categoryId,
-                    },
-                  },
-                ]
-              : []),
-            ...tagIds.map((tagId) => ({
-              tags: {
-                contains: tagId,
-              },
-            })),
-          ],
-        },
-      ],
-    },
-  })
-
-  return result.docs.filter((relatedArticle) => relatedArticle.id !== article.id).slice(0, 3)
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
@@ -109,13 +36,14 @@ export async function generateMetadata({ params }: ArticlePageProps) {
     }
   }
 
-  const image = getMediaUrl(article.seo?.ogImage || article.coverImage)
+  const image = getMediaUrl(article.seo?.ogImage || article.coverImage || settings.defaultOgImage)
   const defaultImage = getMediaUrl(settings.defaultOgImage)
+  const description = article.seo?.description || article.excerpt || settings.siteDescription
 
   return {
-    description: article.seo?.description || article.excerpt,
+    description,
     openGraph: {
-      description: article.seo?.description || article.excerpt,
+      description,
       images: image || defaultImage ? [image || defaultImage || ''] : [],
       title: article.seo?.title || article.title,
       type: 'article',
@@ -138,6 +66,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const tags = Array.isArray(article.tags) ? article.tags : []
   const settings = await getSiteSettings()
   const relatedArticles = await getRelatedArticles(article)
+  const adjacentArticles = await getAdjacentArticles(article)
   const authorPhotoUrl = getMediaUrl(settings.authorPhoto)
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '')
   const articleUrl = `${siteUrl}/articles/${article.slug}`
@@ -230,8 +159,29 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <a className={styles.shareLink} href={articleUrl}>
             {articleUrl}
           </a>
+          <div>
+            <ShareArticleButton url={articleUrl} />
+          </div>
         </div>
       </section>
+      {(adjacentArticles.previous || adjacentArticles.next) && (
+        <nav className={styles.articleNav} aria-label="Навигация по статьям">
+          {adjacentArticles.previous ? (
+            <Link href={`/articles/${adjacentArticles.previous.slug}`}>
+              <span>Предыдущая статья</span>
+              <strong>{adjacentArticles.previous.title}</strong>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {adjacentArticles.next && (
+            <Link href={`/articles/${adjacentArticles.next.slug}`}>
+              <span>Следующая статья</span>
+              <strong>{adjacentArticles.next.title}</strong>
+            </Link>
+          )}
+        </nav>
+      )}
       {relatedArticles.length > 0 && (
         <section className={styles.related}>
           <p className="eyebrow">Еще по этой теме</p>
