@@ -11,6 +11,7 @@ export function SiteHeader({ siteTitle }: { siteTitle: string }) {
         </Link>
         <nav className={styles.nav} aria-label="Основная навигация">
           <Link href="/articles">Статьи</Link>
+          <Link href="/categories">Темы</Link>
           <Link href="/search">Поиск</Link>
           <Link href="/about">Об авторе</Link>
           <Link href="/admin">Админка</Link>

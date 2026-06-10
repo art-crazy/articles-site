@@ -16,6 +16,7 @@ export function SiteFooter({ authorName, siteTitle }: SiteFooterProps) {
         </span>
         <nav className={styles.links} aria-label="Нижняя навигация">
           <Link href="/articles">Статьи</Link>
+          <Link href="/categories">Темы</Link>
           <Link href="/search">Поиск</Link>
           <Link href="/about">Об авторе</Link>
           <Link href="/admin">Админка</Link>

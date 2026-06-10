@@ -81,7 +81,7 @@ export default async function HomePage() {
           ) : (
             <div className="empty-state">
               <p>Пока нет опубликованных статей.</p>
-              <p>Зайдите в /admin, создайте первую статью и нажмите Publish.</p>
+              <p>Скоро здесь появится первый материал автора.</p>
             </div>
           )}
         </div>
@@ -117,7 +117,7 @@ export default async function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="empty-state">Категории пока не добавлены.</div>
+            <div className="empty-state">Темы появятся здесь, когда статей станет больше.</div>
           )}
         </div>
         <aside className={styles.authorSummary}>

@@ -30,7 +30,7 @@ export default async function ArticlesPage() {
         {articles.docs.length > 0 ? (
           articles.docs.map((article) => <ArticleCard article={article} key={article.id} />)
         ) : (
-          <div className="empty-state">Пока нет опубликованных статей.</div>
+          <div className="empty-state">Пока здесь нет опубликованных материалов. Автор готовит первые статьи.</div>
         )}
       </div>
     </section>

@@ -15,6 +15,21 @@ The archive is created in `backups/` and contains:
 
 `backups/` is ignored by Git.
 
+## Restore With Script
+
+Run:
+
+```powershell
+pnpm restore -- backups\articles-site-YYYYMMDD-HHMMSS.zip
+```
+
+The restore script first creates a safety backup of the current state, then restores:
+
+- PostgreSQL from `database.sql`;
+- `media/`, if the archive contains uploaded files.
+
+If local `media/` already exists, it is moved to `media.before-restore-...`.
+
 ## Restore Manually
 
 1. Stop the dev server if it is running.

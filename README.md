@@ -55,6 +55,12 @@ pnpm backup
 
 The archive is saved to `backups/`. Restore notes are in `docs/backup-restore.md`.
 
+Restore from an archive:
+
+```powershell
+pnpm restore -- backups\articles-site-YYYYMMDD-HHMMSS.zip
+```
+
 ## Production Notes
 
 For production, use managed PostgreSQL or a backed-up Postgres instance. Move uploads to S3-compatible storage such as Cloudflare R2 before real publishing if the app is deployed to ephemeral infrastructure.

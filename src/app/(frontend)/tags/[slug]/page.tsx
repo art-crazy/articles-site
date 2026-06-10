@@ -59,7 +59,7 @@ export default async function TagPage({ params }: TagPageProps) {
         {articles.docs.length > 0 ? (
           articles.docs.map((article) => <ArticleCard article={article} key={article.id} />)
         ) : (
-          <div className="empty-state">По этому тегу пока нет опубликованных статей.</div>
+          <div className="empty-state">По этому тегу пока нет опубликованных материалов.</div>
         )}
       </div>
     </section>

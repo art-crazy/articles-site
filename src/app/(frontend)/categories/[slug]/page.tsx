@@ -60,7 +60,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {articles.docs.length > 0 ? (
           articles.docs.map((article) => <ArticleCard article={article} key={article.id} />)
         ) : (
-          <div className="empty-state">В этой категории пока нет опубликованных статей.</div>
+          <div className="empty-state">В этой теме пока нет опубликованных материалов.</div>
         )}
       </div>
     </section>
