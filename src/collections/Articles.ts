@@ -23,12 +23,17 @@ export const Articles: CollectionConfig = {
       return `/preview?slug=${encodeURIComponent(slug)}&secret=${encodeURIComponent(secret)}`
     },
     useAsTitle: 'title',
+    description:
+      'Здесь создаются статьи. Для черновика достаточно заголовка и текста; перед публикацией проверьте описание, обложку и адрес страницы.',
   },
   fields: [
     {
       name: 'title',
       label: 'Заголовок',
       type: 'text',
+      admin: {
+        description: 'Главное название статьи. Показывается на сайте, в списках и в верхней части страницы.',
+      },
       required: true,
     },
     {
@@ -82,7 +87,8 @@ export const Articles: CollectionConfig = {
       label: 'Обложка',
       type: 'upload',
       admin: {
-        description: 'Главное изображение статьи. Показывается на странице статьи и в карточках.',
+        description:
+          'Главное изображение статьи. Лучше горизонтальное фото примерно 1280x720 или крупнее. Не используйте картинку с важным текстом по краям.',
       },
       relationTo: 'media',
     },
@@ -90,18 +96,28 @@ export const Articles: CollectionConfig = {
       name: 'content',
       label: 'Текст статьи',
       type: 'richText',
+      admin: {
+        description:
+          'Основной текст. В редакторе можно добавить изображение, врезку, разделитель или блок "Рекомендуемая статья" для ручной рекомендации.',
+      },
       required: true,
     },
     {
       name: 'category',
       label: 'Категория',
       type: 'relationship',
+      admin: {
+        description: 'Одна главная тема статьи. Помогает читателю найти похожие материалы.',
+      },
       relationTo: 'categories',
     },
     {
       name: 'tags',
       label: 'Теги',
       type: 'relationship',
+      admin: {
+        description: 'Дополнительные темы статьи. Можно выбрать несколько.',
+      },
       hasMany: true,
       relationTo: 'tags',
     },
@@ -110,6 +126,8 @@ export const Articles: CollectionConfig = {
       label: 'Дата публикации',
       type: 'date',
       admin: {
+        description:
+          'Если оставить пустой при публикации, дата заполнится автоматически текущим временем.',
         date: {
           pickerAppearance: 'dayAndTime',
         },
@@ -124,11 +142,17 @@ export const Articles: CollectionConfig = {
           name: 'title',
           label: 'Заголовок для поисковиков',
           type: 'text',
+          admin: {
+            description: 'Можно оставить пустым: тогда будет использован обычный заголовок статьи.',
+          },
         },
         {
           name: 'description',
           label: 'Описание для поисковиков',
           type: 'textarea',
+          admin: {
+            description: 'Короткий текст для поисковиков и соцсетей. Можно оставить пустым: тогда будет взято краткое описание.',
+          },
         },
         {
           name: 'ogImage',

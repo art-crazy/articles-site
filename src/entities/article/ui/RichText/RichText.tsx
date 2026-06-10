@@ -73,7 +73,7 @@ function renderBlock(node: LexicalNode) {
 
       return (
         <aside className={styles.related}>
-          <span>Читайте также</span>
+          <span>Рекомендуемая статья</span>
           <a href={`/articles/${article.slug}`}>{article.title}</a>
         </aside>
       )

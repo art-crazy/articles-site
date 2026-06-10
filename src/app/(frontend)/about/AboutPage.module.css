@@ -1,0 +1,60 @@
+.page {
+  display: grid;
+  gap: 48px;
+  max-width: 760px;
+}
+
+.withPhoto {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  max-width: none;
+}
+
+.content {
+  align-self: center;
+}
+
+.photo {
+  aspect-ratio: 4 / 5;
+  background: #e8e1d5;
+  object-fit: cover;
+  width: 100%;
+}
+
+.details {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  display: grid;
+  gap: 18px;
+  margin-top: 34px;
+  padding-top: 24px;
+}
+
+.details p {
+  margin: 0;
+}
+
+.socialList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.socialList a {
+  border-bottom: 1px solid var(--accent);
+  color: var(--accent-strong);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 860px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+}

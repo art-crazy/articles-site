@@ -5,14 +5,17 @@ export const RelatedArticle: Block = {
   fields: [
     {
       name: 'article',
-      label: 'Статья',
+      label: 'Какую статью рекомендовать',
       type: 'relationship',
+      admin: {
+        description: 'Выберите статью, которую читателю стоит открыть из этого места текста.',
+      },
       relationTo: 'articles',
       required: true,
     },
   ],
   labels: {
-    plural: 'Связанные статьи',
-    singular: 'Связанная статья',
+    plural: 'Рекомендуемые статьи',
+    singular: 'Рекомендуемая статья',
   },
 }

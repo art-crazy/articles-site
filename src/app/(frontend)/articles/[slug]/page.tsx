@@ -15,6 +15,8 @@ import {
   getRelationTitle,
 } from '@/shared/lib/format'
 
+import styles from './ArticlePage.module.css'
+
 export const revalidate = 60
 export const dynamic = 'force-dynamic'
 
@@ -151,14 +153,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   return (
-    <article className="article-page">
+    <article className={styles.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {article._status === 'draft' && (
-        <a className="preview-banner" href="/preview/exit">
-          Черновик. Выйти из preview
+        <a className={styles.previewBanner} href="/preview/exit">
+          Открыт предпросмотр черновика. Выйти из предпросмотра
         </a>
       )}
-      <div className="article-meta">
+      <div className={styles.meta}>
         <span>{formatDate(article.publishedAt)}</span>
         {categoryTitle && categorySlug && (
           <>
@@ -168,10 +170,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         )}
       </div>
       <h1>{article.title}</h1>
-      {article.subtitle && <p className="article-subtitle">{article.subtitle}</p>}
+      {article.subtitle && <p className={styles.subtitle}>{article.subtitle}</p>}
       {article.excerpt && <p className="lead">{article.excerpt}</p>}
       {tags.length > 0 && (
-        <div className="tag-list article-page__tags">
+        <div className={`${styles.tagList} ${styles.tags}`}>
           {tags.map((tag) => {
             const slug = getRelationSlug(tag)
             const title = getRelationTitle(tag)
@@ -191,7 +193,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       {imageUrl && (
         <Image
           alt={getMediaAlt(article.coverImage)}
-          className="article-page__cover"
+          className={styles.cover}
           height={720}
           priority
           src={imageUrl}
@@ -200,9 +202,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       )}
       <RichText data={article.content} />
       {relatedArticles.length > 0 && (
-        <section className="related-section">
+        <section className={styles.related}>
           <p className="eyebrow">Еще по этой теме</p>
-          <div className="related-list">
+          <div className={styles.relatedList}>
             {relatedArticles.map((relatedArticle) => (
               <Link href={`/articles/${relatedArticle.slug}`} key={relatedArticle.id}>
                 <span>{formatDate(relatedArticle.publishedAt)}</span>
