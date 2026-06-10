@@ -1,0 +1,31 @@
+.suggestions {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 12px;
+  margin-top: 32px;
+  max-width: 720px;
+  padding-top: 22px;
+}
+
+.suggestions p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.links a {
+  color: var(--accent-strong);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}

@@ -6,6 +6,11 @@ import { SiteFooter } from '@/shared/ui/SiteFooter/SiteFooter'
 import { SiteHeader } from '@/shared/ui/SiteHeader/SiteHeader'
 
 export const metadata = {
+  alternates: {
+    types: {
+      'application/rss+xml': '/rss.xml',
+    },
+  },
   description: 'Авторский сайт со статьями и админкой на Next.js и Payload.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'Личный журнал',

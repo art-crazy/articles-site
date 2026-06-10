@@ -1,6 +1,4 @@
-function getBaseUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-}
+import { getBaseUrl } from '@/shared/lib/site'
 
 export async function GET() {
   return new Response(

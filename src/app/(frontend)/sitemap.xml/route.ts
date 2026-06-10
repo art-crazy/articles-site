@@ -1,8 +1,5 @@
 import { getPayloadClient } from '@/shared/api/payload'
-
-function getBaseUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-}
+import { getBaseUrl } from '@/shared/lib/site'
 
 function urlEntry(path: string, lastModified?: string) {
   const loc = `${getBaseUrl()}${path}`
@@ -40,6 +37,8 @@ export async function GET() {
     urlEntry('/'),
     urlEntry('/about'),
     urlEntry('/articles'),
+    urlEntry('/categories'),
+    urlEntry('/tags'),
     ...articles.docs.map((article) => urlEntry(`/articles/${article.slug}`, article.updatedAt)),
     ...categories.docs.map((category) => urlEntry(`/categories/${category.slug}`, category.updatedAt)),
     ...tags.docs.map((tag) => urlEntry(`/tags/${tag.slug}`, tag.updatedAt)),

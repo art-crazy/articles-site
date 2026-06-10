@@ -4,6 +4,8 @@ import { getMediaAlt, getMediaUrl } from '@/shared/lib/format'
 
 import styles from './RichText.module.css'
 
+type HeadingIdMap = Record<string, string>
+
 type LexicalNode = {
   children?: LexicalNode[]
   fields?: {
@@ -22,8 +24,18 @@ type LexicalNode = {
   value?: unknown
 }
 
-function renderChildren(nodes?: LexicalNode[]) {
-  return nodes?.map((node, index) => <React.Fragment key={index}>{renderNode(node)}</React.Fragment>)
+function getTextContent(node: LexicalNode): string {
+  if (node.type === 'text') {
+    return node.text || ''
+  }
+
+  return node.children?.map(getTextContent).join('') || ''
+}
+
+function renderChildren(nodes?: LexicalNode[], headingIds?: HeadingIdMap) {
+  return nodes?.map((node, index) => (
+    <React.Fragment key={index}>{renderNode(node, headingIds)}</React.Fragment>
+  ))
 }
 
 function renderText(node: LexicalNode) {
@@ -83,24 +95,25 @@ function renderBlock(node: LexicalNode) {
   }
 }
 
-function renderNode(node: LexicalNode): React.ReactNode {
+function renderNode(node: LexicalNode, headingIds?: HeadingIdMap): React.ReactNode {
   switch (node.type) {
     case 'text':
       return renderText(node)
     case 'heading': {
       const Tag = node.tag === 'h3' ? 'h3' : 'h2'
-      return <Tag>{renderChildren(node.children)}</Tag>
+      const title = getTextContent(node).trim()
+      return <Tag id={title ? headingIds?.[title] : undefined}>{renderChildren(node.children, headingIds)}</Tag>
     }
     case 'quote':
-      return <blockquote>{renderChildren(node.children)}</blockquote>
+      return <blockquote>{renderChildren(node.children, headingIds)}</blockquote>
     case 'list': {
       const Tag = node.tag === 'ol' ? 'ol' : 'ul'
-      return <Tag>{renderChildren(node.children)}</Tag>
+      return <Tag>{renderChildren(node.children, headingIds)}</Tag>
     }
     case 'listitem':
-      return <li>{renderChildren(node.children)}</li>
+      return <li>{renderChildren(node.children, headingIds)}</li>
     case 'link':
-      return <a href={node.url}>{renderChildren(node.children)}</a>
+      return <a href={node.url}>{renderChildren(node.children, headingIds)}</a>
     case 'upload': {
       const url = getMediaUrl(node.value)
       const alt = node.fields?.alt || getMediaAlt(node.value)
@@ -120,17 +133,17 @@ function renderNode(node: LexicalNode): React.ReactNode {
     case 'block':
       return renderBlock(node)
     case 'paragraph':
-      return <p>{renderChildren(node.children)}</p>
+      return <p>{renderChildren(node.children, headingIds)}</p>
     default:
-      return renderChildren(node.children)
+      return renderChildren(node.children, headingIds)
   }
 }
 
-export function RichText({ data }: { data: unknown }) {
+export function RichText({ data, headingIds }: { data: unknown; headingIds?: HeadingIdMap }) {
   if (!data || typeof data !== 'object' || !('root' in data)) {
     return null
   }
 
   const root = data.root as LexicalNode
-  return <div className={styles.body}>{renderChildren(root.children)}</div>
+  return <div className={styles.body}>{renderChildren(root.children, headingIds)}</div>
 }

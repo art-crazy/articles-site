@@ -15,6 +15,7 @@ import {
 
 import { getAdjacentArticles, getArticle, getRelatedArticles } from './articleQueries'
 import styles from './ArticlePage.module.css'
+import { getTableOfContents } from './tableOfContents'
 
 export const revalidate = 60
 export const dynamic = 'force-dynamic'
@@ -67,6 +68,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const settings = await getSiteSettings()
   const relatedArticles = await getRelatedArticles(article)
   const adjacentArticles = await getAdjacentArticles(article)
+  const tableOfContents = getTableOfContents(article.content)
+  const headingIds = Object.fromEntries(tableOfContents.map((item) => [item.title, item.id]))
   const authorPhotoUrl = getMediaUrl(settings.authorPhoto)
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '')
   const articleUrl = `${siteUrl}/articles/${article.slug}`
@@ -132,7 +135,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           width={1280}
         />
       )}
-      <RichText data={article.content} />
+      {tableOfContents.length > 1 && (
+        <nav className={styles.toc} aria-label="Оглавление статьи">
+          <p className={styles.tocTitle}>В статье</p>
+          <ol className={styles.tocList}>
+            {tableOfContents.map((item) => (
+              <li className={item.level === 3 ? styles.tocLevel3 : undefined} key={item.id}>
+                <a href={`#${item.id}`}>{item.title}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <RichText data={article.content} headingIds={headingIds} />
       <section className={styles.afterword}>
         <div className={`${styles.authorBox} ${authorPhotoUrl ? styles.authorBoxWithPhoto : ''}`}>
           {authorPhotoUrl && (

@@ -61,6 +61,10 @@ Restore from an archive:
 pnpm restore -- backups\articles-site-YYYYMMDD-HHMMSS.zip
 ```
 
+## Author Guide
+
+Short publishing notes for the author are in `docs/author-guide.md`.
+
 ## Production Notes
 
 For production, use managed PostgreSQL or a backed-up Postgres instance. Move uploads to S3-compatible storage such as Cloudflare R2 before real publishing if the app is deployed to ephemeral infrastructure.

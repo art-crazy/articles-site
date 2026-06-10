@@ -18,6 +18,12 @@ export default function NotFoundPage() {
         <Link className="secondary-link" href="/articles">
           Все статьи
         </Link>
+        <Link className="secondary-link" href="/categories">
+          Темы
+        </Link>
+        <Link className="secondary-link" href="/search">
+          Поиск
+        </Link>
       </div>
       <SearchForm />
     </section>
