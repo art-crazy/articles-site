@@ -26,6 +26,9 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    components: {
+      beforeDashboard: ['@/app/(payload)/admin/components/AuthorDashboardHelp#AuthorDashboardHelp'],
+    },
     meta: {
       titleSuffix: ' - Админка',
     },
