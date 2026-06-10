@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { populateSlug } from './hooks/populateSlug'
 import { calculateReadingTime } from '../utilities/readingTime'
+import { slugDescription, validateSlug } from '../utilities/validateSlug'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -35,9 +36,9 @@ export const Articles: CollectionConfig = {
       label: 'Адрес страницы',
       type: 'text',
       admin: {
-        description:
-          'Заполнится автоматически из заголовка, если оставить поле пустым. Используется в ссылке на статью.',
+        description: slugDescription,
       },
+      validate: validateSlug,
       unique: true,
     },
     {

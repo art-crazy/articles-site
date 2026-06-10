@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
+import { populateSlug } from './hooks/populateSlug'
+import { slugDescription, validateSlug } from '../utilities/validateSlug'
+
 export const Categories: CollectionConfig = {
   slug: 'categories',
   access: {
@@ -21,9 +24,10 @@ export const Categories: CollectionConfig = {
       label: 'Адрес страницы',
       type: 'text',
       admin: {
-        description: 'Короткая часть ссылки на страницу категории.',
+        description: slugDescription,
       },
       required: true,
+      validate: validateSlug,
       unique: true,
     },
     {
@@ -35,5 +39,8 @@ export const Categories: CollectionConfig = {
   labels: {
     plural: 'Категории',
     singular: 'Категория',
+  },
+  hooks: {
+    beforeValidate: [populateSlug],
   },
 }

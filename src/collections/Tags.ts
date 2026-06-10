@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
+import { populateSlug } from './hooks/populateSlug'
+import { slugDescription, validateSlug } from '../utilities/validateSlug'
+
 export const Tags: CollectionConfig = {
   slug: 'tags',
   access: {
@@ -21,14 +24,18 @@ export const Tags: CollectionConfig = {
       label: 'Адрес страницы',
       type: 'text',
       admin: {
-        description: 'Короткая часть ссылки на страницу тега.',
+        description: slugDescription,
       },
       required: true,
+      validate: validateSlug,
       unique: true,
     },
   ],
   labels: {
     plural: 'Теги',
     singular: 'Тег',
+  },
+  hooks: {
+    beforeValidate: [populateSlug],
   },
 }
