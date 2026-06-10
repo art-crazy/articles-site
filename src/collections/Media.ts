@@ -6,6 +6,8 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   admin: {
+    description:
+      'Загружайте изображения для обложек и текста статей. Перед публикацией обязательно проверьте описание изображения.',
     group: 'Контент',
   },
   fields: [
@@ -19,10 +21,44 @@ export const Media: CollectionConfig = {
       },
       required: true,
     },
+    {
+      name: 'caption',
+      label: 'Подпись под изображением',
+      type: 'text',
+      admin: {
+        description:
+          'Необязательная подпись для читателя. Используйте, если нужно объяснить контекст изображения.',
+      },
+    },
+    {
+      name: 'credit',
+      label: 'Источник или автор изображения',
+      type: 'text',
+      admin: {
+        description:
+          'Необязательное поле для автора фото, архива или источника. На сайте можно использовать позже.',
+      },
+    },
   ],
   labels: {
     plural: 'Изображения и файлы',
     singular: 'Изображение или файл',
   },
-  upload: true,
+  upload: {
+    imageSizes: [
+      {
+        name: 'card',
+        width: 832,
+        height: 520,
+        position: 'centre',
+      },
+      {
+        name: 'cover',
+        width: 1280,
+        height: 720,
+        position: 'centre',
+      },
+    ],
+    mimeTypes: ['image/*'],
+  },
 }

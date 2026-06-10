@@ -146,6 +146,16 @@ export const articleFields: Field[] = [
         label: 'Публикация',
         fields: [
           {
+            name: 'articleQualityNotice',
+            type: 'ui',
+            admin: {
+              components: {
+                Field:
+                  '@/app/(payload)/admin/components/ArticleQualityNotice#ArticleQualityNotice',
+              },
+            },
+          },
+          {
             name: 'publishedAt',
             label: 'Дата публикации',
             type: 'date',

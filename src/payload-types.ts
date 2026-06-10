@@ -153,6 +153,8 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Загружайте изображения для обложек и текста статей. Перед публикацией обязательно проверьте описание изображения.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -162,6 +164,14 @@ export interface Media {
    * Коротко опишите, что изображено: например "Портрет автора у окна". Не пишите "картинка" или "фото".
    */
   alt: string;
+  /**
+   * Необязательная подпись для читателя. Используйте, если нужно объяснить контекст изображения.
+   */
+  caption?: string | null;
+  /**
+   * Необязательное поле для автора фото, архива или источника. На сайте можно использовать позже.
+   */
+  credit?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -173,6 +183,24 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    cover?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * Здесь создаются статьи. Памятка автора: /admin-help. Перед публикацией откройте предпросмотр, проверьте чеклист и только потом меняйте статус публикации.
@@ -419,6 +447,8 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
+  credit?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -430,6 +460,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        cover?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -7,6 +7,7 @@ import { calculateReadingTime } from '../utilities/readingTime'
 export const Articles: CollectionConfig = {
   slug: 'articles',
   access: {
+    delete: () => false,
     read: () => true,
   },
   admin: {
